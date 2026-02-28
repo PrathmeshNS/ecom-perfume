@@ -29,16 +29,16 @@ export default function ProductCard({ product }) {
 
   return (
     <Link to={`/product/${product._id}`}>
-      <Card className="group overflow-hidden transition-all hover:shadow-md">
-        <div className="relative aspect-square overflow-hidden bg-muted">
+      <Card className="group overflow-hidden transition-all duration-200 hover:shadow-md hover:border-lilac/40">
+        <div className="relative aspect-square overflow-hidden bg-blush">
           <img
             src={getImageUrl(product.images)}
             alt={product.name}
-            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
           {product.stock === 0 && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+            <div className="absolute inset-0 flex items-center justify-center bg-dark/50">
               <Badge variant="destructive" className="text-sm">
                 Out of Stock
               </Badge>
@@ -48,10 +48,10 @@ export default function ProductCard({ product }) {
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">
+              <p className="text-xs text-slate uppercase tracking-wide">
                 {product.brand}
               </p>
-              <h3 className="mt-1 font-semibold leading-tight truncate">
+              <h3 className="mt-1 font-semibold leading-tight truncate text-dark">
                 {product.name}
               </h3>
               {product.categoryId && (
@@ -62,12 +62,12 @@ export default function ProductCard({ product }) {
             </div>
           </div>
           <div className="mt-3 flex items-center justify-between">
-            <span className="text-lg font-bold">{formatPrice(product.price)}</span>
+            <span className="text-lg font-bold text-dark">{formatPrice(product.price)}</span>
             <Button
               size="sm"
-              variant="outline"
               onClick={handleAddToCart}
               disabled={product.stock === 0}
+              className="bg-cta text-white hover:bg-cta/90"
             >
               <ShoppingCart className="h-4 w-4" />
             </Button>
@@ -75,7 +75,7 @@ export default function ProductCard({ product }) {
           {product.rating > 0 && (
             <div className="mt-2 flex items-center gap-1">
               <span className="text-yellow-500">★</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-slate">
                 {product.rating.toFixed(1)}
               </span>
             </div>

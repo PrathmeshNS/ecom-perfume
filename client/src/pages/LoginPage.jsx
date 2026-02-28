@@ -76,12 +76,12 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-cta text-white hover:bg-cta/90" disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </Button>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate">
               Don&apos;t have an account?{" "}
-              <Link to="/register" className="font-medium text-primary hover:underline">
+              <Link to="/register" className="font-medium text-cta hover:underline">
                 Register
               </Link>
             </p>

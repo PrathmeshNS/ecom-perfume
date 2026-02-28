@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
+/* ── Design-system palette ── */
 @theme {
-  --color-background: #ffffff;
-  --color-foreground: #0a0a0a;
+  /* Brand palette */
+  --color-blush: #FDE8E9;
+  --color-pastel: #E3BAC6;
+  --color-lilac: #BC9EC1;
+  --color-slate: #596475;
+  --color-dark: #1F2232;
+  --color-cta: #7C3AED;
+
+  /* Semantic tokens mapped to palette */
+  --color-background: #FDE8E9;
+  --color-foreground: #1F2232;
   --color-card: #ffffff;
-  --color-card-foreground: #0a0a0a;
+  --color-card-foreground: #1F2232;
   --color-popover: #ffffff;
-  --color-popover-foreground: #0a0a0a;
-  --color-primary: #18181b;
-  --color-primary-foreground: #fafafa;
-  --color-secondary: #f4f4f5;
-  --color-secondary-foreground: #18181b;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-accent: #f4f4f5;
-  --color-accent-foreground: #18181b;
+  --color-popover-foreground: #1F2232;
+  --color-primary: #7C3AED;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #E3BAC6;
+  --color-secondary-foreground: #1F2232;
+  --color-muted: #f5eff0;
+  --color-muted-foreground: #596475;
+  --color-accent: #BC9EC1;
+  --color-accent-foreground: #1F2232;
   --color-destructive: #ef4444;
   --color-destructive-foreground: #fafafa;
-  --color-border: #e4e4e7;
-  --color-input: #e4e4e7;
-  --color-ring: #18181b;
-  --radius: 0.5rem;
+  --color-border: rgba(89, 100, 117, 0.18);
+  --color-input: rgba(89, 100, 117, 0.22);
+  --color-ring: #BC9EC1;
+  --radius: 0.75rem;
+}
+
+/* CSS custom properties for non-Tailwind consumption */
+:root {
+  --color-bg: #FDE8E9;
+  --color-text: #1F2232;
+  --color-accent: #BC9EC1;
+  --color-cta: #7C3AED;
 }
 
 body {
@@ -34,4 +52,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Focus-visible ring using lilac */
+*:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
 }

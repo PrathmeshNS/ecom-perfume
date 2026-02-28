@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { orderService } from "../services/order.service";
+import { settingsService } from "../services/settings.service";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -18,7 +19,7 @@ import {
 } from "../components/ui/Card";
 import { formatPrice, getImageUrl } from "../utils/helpers";
 import toast from "react-hot-toast";
-import { MapPin, Plus, QrCode, CheckCircle } from "lucide-react";
+import { MapPin, Plus, QrCode, CheckCircle, CreditCard } from "lucide-react";
 
 const addressSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -38,6 +39,8 @@ export default function CheckoutPage() {
   const [step, setStep] = useState(1); // 1=address, 2=payment, 3=success
   const [placing, setPlacing] = useState(false);
   const [order, setOrder] = useState(null);
+  const [paymentQR, setPaymentQR] = useState(null);
+  const [transactionId, setTransactionId] = useState("");
 
   const {
     register,
@@ -52,6 +55,19 @@ export default function CheckoutPage() {
       toast.error("Your cart is empty");
     }
   }, [cart, navigate, step]);
+
+  // Fetch QR code image from admin settings
+  useEffect(() => {
+    const fetchQR = async () => {
+      try {
+        const { data } = await settingsService.getPaymentQR();
+        setPaymentQR(data.data.paymentQR);
+      } catch {
+        // QR not configured — that's fine
+      }
+    };
+    fetchQR();
+  }, []);
 
   useEffect(() => {
     if (user?.addresses?.length > 0 && !selectedAddressId) {
@@ -72,10 +88,14 @@ export default function CheckoutPage() {
   };
 
   const handlePlaceOrder = async () => {
+    if (!transactionId.trim()) {
+      return toast.error("Please enter your transaction / UTR ID after paying");
+    }
     try {
       setPlacing(true);
       const { data } = await orderService.createOrder({
         addressId: selectedAddressId,
+        transactionId: transactionId.trim(),
       });
       setOrder(data.data.order);
       setStep(3);
@@ -96,12 +116,17 @@ export default function CheckoutPage() {
           <CardContent className="pt-6 space-y-4">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
             <h2 className="text-2xl font-bold">Order Placed!</h2>
-            <p className="text-muted-foreground">
+            <p className="text-slate">
               Your order #{order._id?.slice(-8)} has been placed successfully.
             </p>
-            <p className="text-sm text-muted-foreground">
-              Payment status: <span className="font-medium">Pending</span>
+            <p className="text-sm text-slate">
+              Payment status: <span className="font-medium">Pending verification</span>
             </p>
+            {order.transactionId && (
+              <p className="text-sm text-slate">
+                Transaction ID: <span className="font-mono font-medium text-dark">{order.transactionId}</span>
+              </p>
+            )}
             <div className="flex gap-3 justify-center pt-4">
               <Button onClick={() => navigate("/orders")}>View Orders</Button>
               <Button variant="outline" onClick={() => navigate("/")}>
@@ -130,10 +155,10 @@ export default function CheckoutPage() {
               {user?.addresses?.map((addr) => (
                 <label
                   key={addr._id}
-                  className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors ${
+                  className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
                     selectedAddressId === addr._id
-                      ? "border-primary bg-primary/5"
-                      : "border-border hover:border-primary/50"
+                      ? "border-lilac bg-lilac/5"
+                      : "border-border hover:border-lilac/50"
                   }`}
                 >
                   <input
@@ -144,12 +169,12 @@ export default function CheckoutPage() {
                     className="mt-1"
                   />
                   <div>
-                    <p className="font-medium">{addr.fullName}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="font-medium text-dark">{addr.fullName}</p>
+                    <p className="text-sm text-slate">
                       {addr.addressLine}, {addr.city}, {addr.state} -{" "}
                       {addr.pincode}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-slate">
                       Phone: {addr.phone}
                     </p>
                   </div>
@@ -265,26 +290,55 @@ export default function CheckoutPage() {
                 Payment
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6 text-center">
-              <p className="text-muted-foreground">
+            <CardContent className="space-y-6">
+              <p className="text-slate text-center">
                 Scan the QR code below to make payment of{" "}
-                <strong>{formatPrice(cartTotal)}</strong>
+                <strong className="text-dark">{formatPrice(cartTotal)}</strong>
               </p>
-              <div className="mx-auto flex h-64 w-64 items-center justify-center rounded-xl border-2 border-dashed border-border bg-muted">
-                <div className="text-center space-y-2">
-                  <QrCode className="h-24 w-24 mx-auto text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
-                    Payment QR Code
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    (Configure in admin settings)
-                  </p>
-                </div>
+
+              {/* QR Image */}
+              <div className="flex justify-center">
+                {paymentQR?.url ? (
+                  <div className="rounded-xl border border-border overflow-hidden bg-white p-2">
+                    <img
+                      src={paymentQR.url}
+                      alt="Payment QR Code"
+                      className="h-64 w-64 object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-64 w-64 items-center justify-center rounded-xl border-2 border-dashed border-lilac/40 bg-blush">
+                    <div className="text-center space-y-2">
+                      <QrCode className="h-24 w-24 mx-auto text-slate" />
+                      <p className="text-sm text-slate">
+                        QR code not available
+                      </p>
+                      <p className="text-xs text-slate">
+                        Contact the seller for payment details
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
-              <p className="text-sm text-muted-foreground">
-                After scanning, click &quot;Place Order&quot; to confirm. Admin
-                will verify your payment manually.
-              </p>
+
+              {/* Transaction ID */}
+              <div className="max-w-sm mx-auto space-y-2">
+                <Label htmlFor="transaction-id" className="flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  Transaction / UTR ID
+                </Label>
+                <Input
+                  id="transaction-id"
+                  placeholder="Enter transaction ID after payment"
+                  value={transactionId}
+                  onChange={(e) => setTransactionId(e.target.value)}
+                />
+                <p className="text-xs text-slate">
+                  After completing the payment, enter the transaction or UTR
+                  reference number here. This helps us verify your payment
+                  quickly.
+                </p>
+              </div>
             </CardContent>
             <CardFooter className="flex gap-3">
               <Button variant="outline" onClick={() => setStep(1)}>
@@ -320,7 +374,7 @@ export default function CheckoutPage() {
                   <p className="text-sm font-medium truncate">
                     {item.productId?.name}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-slate">
                     Qty: {item.quantity}
                   </p>
                   <p className="text-sm font-semibold">
@@ -331,11 +385,11 @@ export default function CheckoutPage() {
             ))}
             <div className="border-t border-border pt-3">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-slate">Subtotal</span>
                 <span>{formatPrice(cartTotal)}</span>
               </div>
               <div className="flex justify-between text-sm mt-1">
-                <span className="text-muted-foreground">Shipping</span>
+                <span className="text-slate">Shipping</span>
                 <span className="text-green-600">Free</span>
               </div>
               <div className="flex justify-between text-lg font-bold mt-3 pt-3 border-t border-border">

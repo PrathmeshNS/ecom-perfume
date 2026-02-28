@@ -253,7 +253,7 @@ export default function AdminProductsPage() {
               <div>
                 <Label>Images</Label>
                 <div className="mt-1 flex items-center gap-3">
-                  <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed border-border px-4 py-2 text-sm hover:bg-accent">
+                  <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-border px-4 py-2 text-sm hover:bg-pastel/30">
                     <Upload className="h-4 w-4" />
                     Choose files
                     <input
@@ -267,7 +267,7 @@ export default function AdminProductsPage() {
                     />
                   </label>
                   {imageFiles.length > 0 && (
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-slate">
                       {imageFiles.length} file(s) selected
                     </span>
                   )}
@@ -296,7 +296,7 @@ export default function AdminProductsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border bg-muted/50">
+                <tr className="border-b border-border bg-blush/50">
                   <th className="text-left py-3 px-4 font-medium">Product</th>
                   <th className="text-left py-3 px-4 font-medium">Brand</th>
                   <th className="text-left py-3 px-4 font-medium">Category</th>
@@ -318,7 +318,7 @@ export default function AdminProductsPage() {
                           alt={product.name}
                           className="h-10 w-10 rounded-md object-cover"
                         />
-                        <span className="font-medium truncate max-w-[200px]">
+                        <span className="font-medium truncate max-w-50">
                           {product.name}
                         </span>
                       </div>
@@ -377,7 +377,7 @@ export default function AdminProductsPage() {
           >
             Previous
           </Button>
-          <span className="text-sm text-muted-foreground px-4">
+          <span className="text-sm text-slate px-4">
             Page {page} of {pagination.pages}
           </span>
           <Button

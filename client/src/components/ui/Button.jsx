@@ -8,27 +8,27 @@ function Button({
   ...props
 }) {
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    default: "bg-cta text-white hover:bg-cta/90 shadow-sm",
     destructive:
       "bg-destructive text-destructive-foreground hover:bg-destructive/90",
     outline:
-      "border border-border bg-background hover:bg-accent hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
-    link: "text-primary underline-offset-4 hover:underline",
+      "border border-border bg-white text-dark hover:bg-pastel/40 hover:border-lilac",
+    secondary: "bg-lilac/20 text-dark hover:bg-lilac/35",
+    ghost: "hover:bg-pastel/30 text-dark",
+    link: "text-cta underline-offset-4 hover:underline",
   };
 
   const sizes = {
     default: "h-10 px-4 py-2",
     sm: "h-9 rounded-md px-3",
-    lg: "h-11 rounded-md px-8",
+    lg: "h-11 rounded-xl px-8",
     icon: "h-10 w-10",
   };
 
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lilac focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer",
         variants[variant],
         sizes[size],
         className

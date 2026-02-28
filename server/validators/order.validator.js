@@ -12,6 +12,7 @@ const addressSchema = z.object({
 const createOrderSchema = z.object({
   addressId: z.string().optional(),
   address: addressSchema.optional(),
+  transactionId: z.string().max(100).optional(),
 });
 
 const updateOrderSchema = z.object({

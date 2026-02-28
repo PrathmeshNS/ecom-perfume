@@ -6,6 +6,8 @@ import {
   ShoppingBag,
   FolderOpen,
   ChevronLeft,
+  Watch,
+  Settings,
 } from "lucide-react";
 import { Button } from "../../components/ui/Button";
 import { cn } from "../../utils/cn";
@@ -15,6 +17,8 @@ const navItems = [
   { to: "/admin/products", icon: Package, label: "Products" },
   { to: "/admin/orders", icon: ShoppingBag, label: "Orders" },
   { to: "/admin/categories", icon: FolderOpen, label: "Categories" },
+  { to: "/admin/watches", icon: Watch, label: "Watches" },
+  { to: "/admin/settings", icon: Settings, label: "Settings" },
 ];
 
 export default function AdminLayout() {
@@ -26,13 +30,13 @@ export default function AdminLayout() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "border-r border-border bg-card transition-all duration-200",
+          "border-r border-border bg-white transition-all duration-200",
           sidebarOpen ? "w-56" : "w-16"
         )}
       >
         <div className="flex h-12 items-center justify-between px-3 border-b border-border">
           {sidebarOpen && (
-            <span className="text-sm font-semibold">Admin Panel</span>
+            <span className="text-sm font-semibold text-dark">Admin Panel</span>
           )}
           <Button
             variant="ghost"
@@ -60,11 +64,11 @@ export default function AdminLayout() {
                 className={cn(
                   "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    ? "bg-cta text-white"
+                    : "text-slate hover:bg-pastel/30 hover:text-dark"
                 )}
               >
-                <Icon className="h-4 w-4 flex-shrink-0" />
+                <Icon className="h-4 w-4 shrink-0" />
                 {sidebarOpen && <span>{label}</span>}
               </Link>
             );

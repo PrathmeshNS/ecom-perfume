@@ -62,7 +62,7 @@ export default function ProductPage() {
       <div className="grid gap-8 md:grid-cols-2">
         {/* Images */}
         <div className="space-y-4">
-          <div className="aspect-square overflow-hidden rounded-lg bg-muted">
+          <div className="aspect-square overflow-hidden rounded-xl bg-blush">
             <img
               src={
                 product.images?.length > 0
@@ -78,9 +78,9 @@ export default function ProductPage() {
               {product.images.map((img, idx) => (
                 <button
                   key={idx}
-                  className={`h-20 w-20 flex-shrink-0 overflow-hidden rounded-md border-2 cursor-pointer ${
+                  className={`h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 cursor-pointer ${
                     selectedImage === idx
-                      ? "border-primary"
+                      ? "border-lilac"
                       : "border-transparent"
                   }`}
                   onClick={() => setSelectedImage(idx)}
@@ -99,10 +99,10 @@ export default function ProductPage() {
         {/* Product info */}
         <div className="space-y-6">
           <div>
-            <p className="text-sm text-muted-foreground uppercase tracking-wide">
+            <p className="text-sm text-slate uppercase tracking-wide">
               {product.brand}
             </p>
-            <h1 className="mt-1 text-3xl font-bold">{product.name}</h1>
+            <h1 className="mt-1 text-3xl font-bold text-dark">{product.name}</h1>
             {product.categoryId && (
               <Badge variant="secondary" className="mt-2">
                 {product.categoryId.name}
@@ -111,13 +111,13 @@ export default function ProductPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold">
+            <span className="text-3xl font-bold text-dark">
               {formatPrice(product.price)}
             </span>
             {product.rating > 0 && (
               <div className="flex items-center gap-1 text-yellow-500">
                 <span>★</span>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-slate">
                   {product.rating.toFixed(1)}
                 </span>
               </div>
@@ -125,8 +125,8 @@ export default function ProductPage() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-2">Description</h3>
-            <p className="text-muted-foreground leading-relaxed">
+            <h3 className="font-semibold mb-2 text-dark">Description</h3>
+            <p className="text-slate leading-relaxed">
               {product.description}
             </p>
           </div>
@@ -166,7 +166,7 @@ export default function ProductPage() {
                   </Button>
                 </div>
               </div>
-              <Button size="lg" className="w-full" onClick={handleAddToCart}>
+              <Button size="lg" className="w-full bg-cta text-white hover:bg-cta/90" onClick={handleAddToCart}>
                 <ShoppingCart className="h-5 w-5 mr-2" />
                 Add to Cart — {formatPrice(product.price * quantity)}
               </Button>

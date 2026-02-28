@@ -3,7 +3,7 @@ import { Loader2 } from "lucide-react";
 
 function Spinner({ className, size = 24 }) {
   return (
-    <Loader2 className={cn("animate-spin text-primary", className)} size={size} />
+    <Loader2 className={cn("animate-spin text-cta", className)} size={size} />
   );
 }
 

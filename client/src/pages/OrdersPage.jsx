@@ -48,9 +48,9 @@ export default function OrdersPage() {
 
       {orders.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <Package className="h-12 w-12 text-muted-foreground mb-3" />
-          <h2 className="text-xl font-semibold">No orders yet</h2>
-          <p className="text-muted-foreground mt-1">
+          <Package className="h-12 w-12 text-slate mb-3" />
+          <h2 className="text-xl font-semibold text-dark">No orders yet</h2>
+          <p className="text-slate mt-1">
             Start shopping to see your orders here
           </p>
           <Link to="/">
@@ -63,15 +63,15 @@ export default function OrdersPage() {
             <Card key={order._id} className="overflow-hidden">
               <CardContent className="p-0">
                 {/* Order header */}
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border bg-muted/50 px-4 py-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border bg-blush/50 px-4 py-3">
                   <div className="flex items-center gap-4 text-sm">
                     <div>
-                      <span className="text-muted-foreground">Order </span>
-                      <span className="font-mono font-medium">
+                      <span className="text-slate">Order </span>
+                      <span className="font-mono font-medium text-dark">
                         #{order._id?.slice(-8)}
                       </span>
                     </div>
-                    <div className="text-muted-foreground">
+                    <div className="text-slate">
                       {new Date(order.createdAt).toLocaleDateString("en-IN", {
                         year: "numeric",
                         month: "short",
@@ -89,6 +89,18 @@ export default function OrdersPage() {
                   </div>
                 </div>
 
+                {/* Transaction ID */}
+                {order.transactionId && (
+                  <div className="px-4 py-2 border-b border-border bg-blush/30">
+                    <p className="text-xs text-slate">
+                      Transaction ID:{" "}
+                      <span className="font-mono font-medium text-dark">
+                        {order.transactionId}
+                      </span>
+                    </p>
+                  </div>
+                )}
+
                 {/* Order items */}
                 <div className="px-4 py-3 space-y-3">
                   {order.items?.slice(0, 3).map((item, idx) => (
@@ -102,21 +114,21 @@ export default function OrdersPage() {
                         <p className="text-sm font-medium truncate">
                           {item.productId?.name || "Product"}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-slate">
                           Qty: {item.quantity} × {formatPrice(item.price)}
                         </p>
                       </div>
                     </div>
                   ))}
                   {order.items?.length > 3 && (
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-slate">
                       +{order.items.length - 3} more items
                     </p>
                   )}
                 </div>
 
                 {/* Order footer */}
-                <div className="flex items-center justify-between border-t border-border bg-muted/30 px-4 py-3">
+                <div className="flex items-center justify-between border-t border-border bg-blush/30 px-4 py-3">
                   <span className="font-semibold">
                     Total: {formatPrice(order.totalAmount)}
                   </span>
@@ -139,7 +151,7 @@ export default function OrdersPage() {
               >
                 Previous
               </Button>
-              <span className="text-sm text-muted-foreground px-4">
+              <span className="text-sm text-slate px-4">
                 Page {page} of {pagination.pages}
               </span>
               <Button

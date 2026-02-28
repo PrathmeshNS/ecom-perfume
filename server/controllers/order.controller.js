@@ -8,7 +8,7 @@ const asyncHandler = require("../utils/asyncHandler");
 // @desc    Create order from cart
 // @route   POST /api/orders
 const createOrder = asyncHandler(async (req, res) => {
-  const { addressId, address: newAddress } = req.body;
+  const { addressId, address: newAddress, transactionId } = req.body;
 
   // Get cart
   const cart = await Cart.findOne({ userId: req.user._id }).populate(
@@ -76,6 +76,7 @@ const createOrder = asyncHandler(async (req, res) => {
     address,
     status: "pending",
     paymentStatus: "pending",
+    transactionId: transactionId || "",
   });
 
   // Clear cart

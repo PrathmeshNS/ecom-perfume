@@ -112,11 +112,11 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <div className="mb-8 rounded-xl bg-gradient-to-r from-zinc-900 to-zinc-700 p-8 text-white md:p-12">
+      <div className="mb-8 rounded-xl bg-linear-to-r from-dark to-slate p-8 text-white md:p-12">
         <h1 className="text-3xl font-bold md:text-5xl">
           Discover Your Signature Scent
         </h1>
-        <p className="mt-3 max-w-xl text-zinc-300">
+        <p className="mt-3 max-w-xl text-pastel">
           Premium perfumes curated for every style. Explore our collection of
           luxury fragrances for men, women, and unisex options.
         </p>
@@ -126,7 +126,7 @@ export default function HomePage() {
       <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-2">
           <div className="relative flex-1 md:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate" />
             <Input
               placeholder="Search perfumes..."
               className="pl-9"
@@ -210,9 +210,9 @@ export default function HomePage() {
         <PageLoader />
       ) : products.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <Search className="h-12 w-12 text-muted-foreground mb-4" />
-          <h2 className="text-xl font-semibold">No products found</h2>
-          <p className="text-muted-foreground mt-1">
+          <Search className="h-12 w-12 text-slate mb-4" />
+          <h2 className="text-xl font-semibold text-dark">No products found</h2>
+          <p className="text-slate mt-1">
             Try adjusting your search or filter criteria
           </p>
           {hasActiveFilters && (
@@ -242,7 +242,7 @@ export default function HomePage() {
               >
                 Previous
               </Button>
-              <span className="text-sm text-muted-foreground px-4">
+              <span className="text-sm text-slate px-4">
                 Page {pagination.page} of {pagination.pages}
               </span>
               <Button

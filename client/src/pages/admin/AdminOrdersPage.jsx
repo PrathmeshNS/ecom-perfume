@@ -86,11 +86,12 @@ export default function AdminOrdersPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border bg-muted/50">
+                <tr className="border-b border-border bg-blush/50">
                   <th className="text-left py-3 px-4 font-medium">Order ID</th>
                   <th className="text-left py-3 px-4 font-medium">Customer</th>
                   <th className="text-left py-3 px-4 font-medium">Items</th>
                   <th className="text-left py-3 px-4 font-medium">Amount</th>
+                  <th className="text-left py-3 px-4 font-medium">Txn ID</th>
                   <th className="text-left py-3 px-4 font-medium">Status</th>
                   <th className="text-left py-3 px-4 font-medium">Payment</th>
                   <th className="text-left py-3 px-4 font-medium">Date</th>
@@ -110,7 +111,7 @@ export default function AdminOrdersPage() {
                         <p className="font-medium">
                           {order.userId?.name || "N/A"}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-slate">
                           {order.userId?.email}
                         </p>
                       </div>
@@ -120,6 +121,18 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="py-3 px-4 font-medium">
                       {formatPrice(order.totalAmount)}
+                    </td>
+                    <td className="py-3 px-4">
+                      {order.transactionId ? (
+                        <span
+                          className="inline-flex items-center font-mono text-xs bg-blush rounded-md px-2 py-1 max-w-35 truncate cursor-default"
+                          title={order.transactionId}
+                        >
+                          {order.transactionId}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-slate italic">—</span>
+                      )}
                     </td>
                     <td className="py-3 px-4">
                       <Select
@@ -150,7 +163,7 @@ export default function AdminOrdersPage() {
                         <option value="paid">Paid</option>
                       </Select>
                     </td>
-                    <td className="py-3 px-4 text-muted-foreground text-xs">
+                    <td className="py-3 px-4 text-slate text-xs">
                       {new Date(order.createdAt).toLocaleDateString("en-IN", {
                         day: "numeric",
                         month: "short",
@@ -164,7 +177,7 @@ export default function AdminOrdersPage() {
           </div>
 
           {orders.length === 0 && (
-            <p className="text-center text-muted-foreground py-12">
+            <p className="text-center text-slate py-12">
               No orders found
             </p>
           )}
@@ -181,7 +194,7 @@ export default function AdminOrdersPage() {
           >
             Previous
           </Button>
-          <span className="text-sm text-muted-foreground px-4">
+          <span className="text-sm text-slate px-4">
             Page {page} of {pagination.pages}
           </span>
           <Button

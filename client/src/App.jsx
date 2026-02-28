@@ -19,6 +19,10 @@ const DashboardPage = lazy(() => import("./pages/admin/DashboardPage"));
 const AdminProductsPage = lazy(() => import("./pages/admin/AdminProductsPage"));
 const AdminOrdersPage = lazy(() => import("./pages/admin/AdminOrdersPage"));
 const AdminCategoriesPage = lazy(() => import("./pages/admin/AdminCategoriesPage"));
+const WatchesPage = lazy(() => import("./pages/WatchesPage"));
+const WatchDetailPage = lazy(() => import("./pages/WatchDetailPage"));
+const AdminWatchesPage = lazy(() => import("./pages/admin/AdminWatchesPage"));
+const AdminSettingsPage = lazy(() => import("./pages/admin/AdminSettingsPage"));
 
 function App() {
   return (
@@ -41,6 +45,8 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/" element={<HomePage />} />
                 <Route path="/product/:id" element={<ProductPage />} />
+                <Route path="/watches" element={<WatchesPage />} />
+                <Route path="/watches/:id" element={<WatchDetailPage />} />
                 <Route
                   path="/login"
                   element={
@@ -90,6 +96,8 @@ function App() {
                 <Route path="products" element={<AdminProductsPage />} />
                 <Route path="orders" element={<AdminOrdersPage />} />
                 <Route path="categories" element={<AdminCategoriesPage />} />
+                <Route path="watches" element={<AdminWatchesPage />} />
+                <Route path="settings" element={<AdminSettingsPage />} />
               </Route>
             </Routes>
           </Suspense>

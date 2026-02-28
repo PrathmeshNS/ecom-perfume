@@ -2,11 +2,11 @@ import { cn } from "../../utils/cn";
 
 function Badge({ className, variant = "default", ...props }) {
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/80",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+    default: "bg-cta text-white",
+    secondary: "bg-lilac/20 text-dark",
     destructive:
-      "bg-destructive text-destructive-foreground hover:bg-destructive/80",
-    outline: "text-foreground border border-border",
+      "bg-destructive text-destructive-foreground",
+    outline: "text-dark border border-border",
     success: "bg-green-100 text-green-800",
     warning: "bg-yellow-100 text-yellow-800",
   };

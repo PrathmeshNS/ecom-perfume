@@ -72,7 +72,7 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-dark mb-6">Dashboard</h1>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((stat) => (
@@ -80,8 +80,8 @@ export default function DashboardPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{stat.title}</p>
-                  <p className="text-2xl font-bold mt-1">{stat.value}</p>
+                  <p className="text-sm text-slate">{stat.title}</p>
+                  <p className="text-2xl font-bold text-dark mt-1">{stat.value}</p>
                 </div>
                 <stat.icon className={`h-8 w-8 ${stat.color}`} />
               </div>
@@ -97,7 +97,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           {recentOrders.length === 0 ? (
-            <p className="text-muted-foreground text-center py-8">
+            <p className="text-slate text-center py-8">
               No orders yet
             </p>
           ) : (
@@ -152,7 +152,7 @@ export default function DashboardPage() {
                           {order.paymentStatus}
                         </span>
                       </td>
-                      <td className="py-3 px-2 text-muted-foreground">
+                      <td className="py-3 px-2 text-slate">
                         {new Date(order.createdAt).toLocaleDateString("en-IN")}
                       </td>
                     </tr>

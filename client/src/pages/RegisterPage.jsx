@@ -127,14 +127,14 @@ export default function RegisterPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full bg-cta text-white hover:bg-cta/90" disabled={loading}>
               {loading ? "Creating account..." : "Register"}
             </Button>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="font-medium text-primary hover:underline"
+                className="font-medium text-cta hover:underline"
               >
                 Login
               </Link>
