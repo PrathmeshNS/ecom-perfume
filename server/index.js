@@ -22,7 +22,7 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173" || "https://ecom-perfume-orcin.vercel.app/",
     credentials: true,
   })
 );
