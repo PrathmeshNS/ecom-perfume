@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, User, Menu, X, Search, LogOut, Package, Shield } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Input } from "../ui/Input";
+import { Modal } from "../ui/Modal";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
@@ -24,7 +26,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     await logout();
-    setUserMenuOpen(false);
+    setLogoutModalOpen(false);
     navigate("/");
   };
 
@@ -126,7 +128,10 @@ export default function Navbar() {
                           </Link>
                         )}
                         <button
-                          onClick={handleLogout}
+                          onClick={() => {
+                            setUserMenuOpen(false);
+                            setLogoutModalOpen(true);
+                          }}
                           className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-pastel/30 text-destructive cursor-pointer"
                         >
                           <LogOut className="h-4 w-4" />
@@ -188,6 +193,22 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      <Modal
+        isOpen={logoutModalOpen}
+        onClose={() => setLogoutModalOpen(false)}
+        title="Confirm Logout"
+      >
+        <p className="text-slate mb-6">Are you sure you want to log out of your account?</p>
+        <div className="flex justify-end gap-3">
+          <Button variant="outline" onClick={() => setLogoutModalOpen(false)}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white">
+            Log Out
+          </Button>
+        </div>
+      </Modal>
     </header>
   );
 }
